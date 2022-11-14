@@ -16,8 +16,8 @@ const ListSelection = ({
   };
 
   const onItemSelected = (option) => {
-    onChange !== undefined && onChange(options.key);
-    onChange !== undefined && setInputValue(options.value)
+    onChange !== undefined && onChange(option.key);
+    onChange !== undefined && setInputValue(option.value)
     setOpen(false)
   }
 
@@ -28,7 +28,7 @@ const ListSelection = ({
 
   const onInputClick = () => {
     setOpen((prevValue) => !prevValue);
-  }
+  };
 
   return (
     <div className="formContainer">
