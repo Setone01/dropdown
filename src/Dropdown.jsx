@@ -13,7 +13,6 @@ const options = [
 
 const Dropdown = () => {
   const [selectedOption, setSelectedOption] = useState("");
-  const [open, setOpen] = useState(false)
 
   return (
     <div className="dropdownContainer">
@@ -22,8 +21,6 @@ const Dropdown = () => {
             placeholder={"Select Country"}
             onChange={(item) => setSelectedOption(item)}
             selectedKey={selectedOption}
-            open={open}
-            setOpen={setOpen}
       />
     </div>
   );

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { AiOutlineDown, AiOutlineClose } from "react-icons/ai";
+import clickOutside from "./clickOutside";
 
-const ListSelection = ({
+const ListSelection = React.forwardRef(({
   options,
   placeholder = "",
   onChange,
   selectedKey,
   open,
   setOpen,
-}) => {
+}  , ref) => {
   const [inputValue, setInputValue] = useState("");
  
   const onInputChange = (e) => {
@@ -28,10 +29,10 @@ const ListSelection = ({
 
   const onInputClick = () => {
     setOpen((prevValue) => !prevValue);
-  }
+  };
 
   return (
-    <div className="formContainer">
+    <div className="formContainer" ref={ref}>
       <h3>Country</h3>
       <form className="registrationForm" >
         <input
@@ -43,14 +44,24 @@ const ListSelection = ({
           onClick={onInputClick}
         />
         <div className="selectIcon">
-          <AiOutlineDown />
+          <AiOutlineDown className="selectPin" />
         </div>
         { selectedKey || inputValue ? <div onClick={clearDropdown} className="clearInput">
           <AiOutlineClose />
         </div>: null }
 
         <div className={`dropdown ${open ? "visible" : ""}`}>
-          {options.map((opt) => {
+          {options
+
+          // to filter through every option
+          .filter((item) => {
+            const searchItem =inputValue.toLocaleLowerCase();
+            const show = item.value.toLocaleLowerCase();
+
+            if (!searchItem) return true;
+
+            return show.startsWith(searchItem);
+          }).map((opt) => {
             return <div className="dropList" key={opt.key} onClick={() => onItemSelected(opt)}>
               {opt.value}
               </div>
@@ -62,6 +73,6 @@ const ListSelection = ({
         </button>
     </div>
   );
-};
+});
 
-export default ListSelection;
+export default clickOutside(ListSelection);
